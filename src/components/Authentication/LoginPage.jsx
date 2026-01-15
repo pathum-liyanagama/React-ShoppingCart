@@ -1,22 +1,26 @@
 import React from "react";
 import "./LoginPage.css";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const LoginPage = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log("Form Data Submitted: ", formData);
+  const onSubmit = (data) => {
+    console.log(data);
   };
 
   return (
     <section className="align_center form_page">
-      <form action="" className="authentication_form" onSubmit={handleSubmit}>
+      <form
+        action=""
+        className="authentication_form"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <h2>Login</h2>
         <div className="form_inputs">
           <div>
@@ -27,11 +31,11 @@ const LoginPage = () => {
               name="email"
               id="email"
               placeholder="Enter your email"
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
+              {...register("email", { required: true })}
             />
+            {errors.email?.type === "required" && (
+              <em className="form_error">Please enter your email</em>
+            )}
           </div>
           <div>
             <label htmlFor="password">Password</label>
@@ -41,11 +45,11 @@ const LoginPage = () => {
               name="password"
               id="password"
               placeholder="Enter your password"
-              value={formData.password}
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
+              {...register("password", { required: true })}
             />
+            {errors.password?.type === "required" && (
+              <em className="form_error">Please enter your password</em>
+            )}
           </div>
           <button className="search_button form_submit">Submit</button>
         </div>
