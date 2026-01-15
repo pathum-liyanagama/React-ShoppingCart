@@ -1,14 +1,25 @@
 import React from "react";
 import "./LoginPage.css";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const loginSchema = z.object({
+  email: z
+    .string()
+    .email({ message: "Please enter a valid email address" })
+    .min(3),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters long" }),
+});
 
 const LoginPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: zodResolver(loginSchema) });
 
   const onSubmit = (data) => {
     console.log(data);
@@ -33,8 +44,8 @@ const LoginPage = () => {
               placeholder="Enter your email"
               {...register("email", { required: true })}
             />
-            {errors.email?.type === "required" && (
-              <em className="form_error">Please enter your email</em>
+            {errors.email && (
+              <em className="form_error">{errors.email.message}</em>
             )}
           </div>
           <div>
@@ -47,8 +58,8 @@ const LoginPage = () => {
               placeholder="Enter your password"
               {...register("password", { required: true })}
             />
-            {errors.password?.type === "required" && (
-              <em className="form_error">Please enter your password</em>
+            {errors.password && (
+              <em className="form_error">{errors.password.message}</em>
             )}
           </div>
           <button className="search_button form_submit">Submit</button>
