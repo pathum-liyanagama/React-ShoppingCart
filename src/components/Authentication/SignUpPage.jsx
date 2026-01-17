@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./SignUpPage.css";
 import userImage from "../../assets/user.webp";
 import { z } from "zod";
@@ -28,6 +29,7 @@ const signUpSchema = z
   });
 
 const SignUpPage = () => {
+  const [profilePic, setprofilePic] = useState(null);
   const {
     register,
     handleSubmit,
@@ -47,13 +49,18 @@ const SignUpPage = () => {
         <h2>Sign Up</h2>
         <div className="image_input_section">
           <div className="image_preview">
-            <img src={userImage} alt="Sign Up" id="file-ip-1-preview" />
+            <img src={profilePic ? URL.createObjectURL(profilePic) : userImage} alt="Sign Up" id="file-ip-1-preview" />
           </div>
 
           <label htmlFor="file-ip-1" className="image_label">
             Upload Image
           </label>
-          <input type="file" id="file-ip-1" className="image_input" />
+          <input
+            type="file"
+            id="file-ip-1"
+            className="image_input"
+            onChange={(e) => setprofilePic(e.target.files[0])}
+          />
         </div>
         <div className="form_inputs signup_form_input">
           <div>
