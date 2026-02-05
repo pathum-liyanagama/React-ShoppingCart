@@ -1,5 +1,5 @@
 import "./Navbar.css";
-import LinkWithIcon from "./LinkWithIcon";
+import LinkWithIcon from "../Common/LinkWithIcon";
 import rocket from "../../assets/rocket.png";
 import star from "../../assets/glowing-star.png";
 import idButton from "../../assets/id-button.png";

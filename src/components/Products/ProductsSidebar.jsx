@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ProductsSidebar.css";
-import LinkWithIcon from "../Navbar/LinkWithIcon";
+import LinkWithIcon from "../Common/LinkWithIcon";
 import apiClient from "../../utils/api-client";
 
 const ProductsSidebar = () => {
