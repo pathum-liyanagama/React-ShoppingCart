@@ -1,31 +1,16 @@
-import React, { useEffect, useState } from "react";
 import "./ProductsSidebar.css";
 import LinkWithIcon from "../Common/LinkWithIcon";
-import apiClient from "../../utils/api-client";
+import useData from "../../hooks/useData";
 
 const ProductsSidebar = () => {
-  const [categories, setCategories] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    apiClient
-      .get("/category")
-      .then((response) => {
-        console.log(response);
-        setCategories(response.data);
-      })
-      .catch((err) => {
-        setError(err.message);
-        console.error("Error fetching categories:", err);
-      });
-  }, []);
+  const { data: categories, error } = useData("/category");
 
   return (
     <aside className="products_sidebar">
       <h2>Category</h2>
       <div className="category_links">
         {error && <em className="form_error">{error}</em>}
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <LinkWithIcon
             key={category._id}
             id={category._id}
